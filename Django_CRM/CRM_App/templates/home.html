@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="col-9 mx-auto">
+    {% if user.is_authenticated %}
+    <br><h1 style="text-align: center;">Records</h1><br>
+      <table class="table table-striped table-hover table-bordered">
+        <thead class="table-dark">
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Address</th>
+            <th scope="col">City</th>
+            <th scope="col">Zipcode</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+          {% if records %}
+            {% for record in records %}
+              <tr>
+                <td><a href="{% url 'record' record.id %}">{{ record.id }}</a></td>
+                <td>{{ record.first_name }} {{ record.last_name }}</td>
+                <td>{{ record.email }}</td>
+                <td>{{ record.phone }}</td>
+                <td>{{ record.address }}</td>
+                <td>{{ record.city }}</td>
+                <td>{{ record.zipcode }}</td>
+              </tr>
+            {% endfor %}
+          {% endif %}
+        </tbody>
+      </table>
+    {% else %}
+    <div class="col-5 mx-auto">
+      <br><h1>Login</h1><br>
+    <form method="POST" action="{% url 'home' %}">
+        {% csrf_token %}
+        <form>
+  <div class="mb-3">
+    <input type="Text" class="form-control" name="username", placeholder="Enter your Username" required>
+  </div>
+  <div class="mb-3">
+    <input type="password" class="form-control" name="password", placeholder="Enter your Password" required>
+  </div>
+  <div class="mb-3 form-check">
+    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+    <label class="form-check-label" for="exampleCheck1">Remember Me</label>
+  </div>
+  <button type="submit" class="btn btn-primary">Login</button>
+</form>            
+    </form>
+</div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
